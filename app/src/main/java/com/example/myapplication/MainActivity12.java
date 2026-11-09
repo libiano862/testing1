@@ -1,0 +1,45 @@
+package com.example.myapplication;
+
+import android.content.Intent;
+import android.os.Bundle;
+
+import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.graphics.Insets;
+import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
+
+import com.example.myapplication.databinding.ActivityMain12Binding;
+
+public class MainActivity12 extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        EdgeToEdge.enable(this);
+
+        ActivityMain12Binding binding = ActivityMain12Binding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        ViewCompat.setOnApplyWindowInsetsListener(binding.main, (v, insets) -> {
+            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
+            return insets;
+        });
+
+        binding.returnbutton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity12.this, MainActivity3.class);
+            startActivity(intent);
+        });
+
+        binding.Santosbuildingbutton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity12.this, MainActivity14.class);
+            startActivity(intent);
+        });
+
+        binding.Dohertybuildingbutton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity12.this, MainActivity15.class);
+            startActivity(intent);
+        });
+    }
+}
