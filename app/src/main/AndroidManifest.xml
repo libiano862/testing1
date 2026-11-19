@@ -100,6 +100,11 @@
             android:exported="false"
             android:theme="@style/Theme.MyApplication"
             android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".MainActivity19"
+            android:exported="false"
+            android:theme="@style/Theme.MyApplication"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

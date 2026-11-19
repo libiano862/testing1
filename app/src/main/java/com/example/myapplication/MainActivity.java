@@ -3,7 +3,6 @@ package com.example.myapplication;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -15,7 +14,6 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-    private Button move;
     private EditText usernameEditText;
     private EditText passwordEditText;
     private DatabaseHelper dbHelper;
@@ -42,29 +40,35 @@ public class MainActivity extends AppCompatActivity {
 
         usernameEditText = findViewById(R.id.editTextTextEmailAddress3);
         passwordEditText = findViewById(R.id.editTextTextPassword);
-        move = findViewById(R.id.Move);
+        Button move = findViewById(R.id.Move);
 
-        move.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        if (move != null) {
+            move.setOnClickListener(v -> {
                 String username = usernameEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
 
-                if (!TextUtils.isEmpty(username) && !TextUtils.isEmpty(password)) {
-                    User user = dbHelper.checkUser(username, password);
-                    if (user != null) {
-                        Toast.makeText(MainActivity.this, "Welcome " + user.getUsername() + " (ID: " + user.getId() + ")", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(MainActivity.this, MainActivity2.class);
-                        startActivity(intent);
-                    } else {
-                        Toast.makeText(MainActivity.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
-                    }
-                } else {
-                    // Direct navigation if inputs are left empty
+                if (TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
+                    Toast.makeText(MainActivity.this, "Please enter your username and password", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                User user = dbHelper.checkUser(username, password);
+                if (user != null) {
+                    Toast.makeText(MainActivity.this, "Welcome " + user.getUsername(), Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                     startActivity(intent);
+                } else {
+                    Toast.makeText(MainActivity.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
+            });
+        }
+
+        Button registerButton = findViewById(R.id.Register);
+        if (registerButton != null) {
+            registerButton.setOnClickListener(v -> {
+                Intent intent = new Intent(MainActivity.this, MainActivity19.class);
+                startActivity(intent);
+            });
+        }
     }
 }
